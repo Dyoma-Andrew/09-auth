@@ -1,22 +1,22 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { useQuery, keepPreviousData } from '@tanstack/react-query';
-import { useDebouncedCallback } from 'use-debounce';
+import { useState } from "react";
+import Link from "next/link";
+import { useQuery, keepPreviousData } from "@tanstack/react-query";
+import { useDebouncedCallback } from "use-debounce";
 
-import { fetchNotes } from '@/lib/api';
-import NoteList from '@/components/NoteList/NoteList';
-import Pagination from '@/components/Pagination/Pagination';
-import SearchBox from '@/components/SearchBox/SearchBox';
+import { fetchNotes } from "@/lib/api/clientApi";
+import NoteList from "@/components/NoteList/NoteList";
+import Pagination from "@/components/Pagination/Pagination";
+import SearchBox from "@/components/SearchBox/SearchBox";
 
-import css from './Notes.module.css';
+import css from "./Notes.module.css";
 
 const PER_PAGE = 12;
 
 export default function NotesClient({ tag }: { tag: string }) {
-  const [searchInput, setSearchInput] = useState('');
-  const [search, setSearch] = useState('');
+  const [searchInput, setSearchInput] = useState("");
+  const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
 
   const debouncedSearch = useDebouncedCallback((value: string) => {
@@ -25,7 +25,7 @@ export default function NotesClient({ tag }: { tag: string }) {
   }, 500);
 
   const { data, isPending, isError } = useQuery({
-    queryKey: ['notes', page, PER_PAGE, search, tag],
+    queryKey: ["notes", page, PER_PAGE, search, tag],
     queryFn: () =>
       fetchNotes({
         page,
@@ -54,10 +54,16 @@ export default function NotesClient({ tag }: { tag: string }) {
         <SearchBox value={searchInput} onSearch={handleSearch} />
 
         {data && data.totalPages > 1 && (
-          <Pagination pageCount={data.totalPages} currentPage={page} onPageChange={setPage} />
+          <Pagination
+            pageCount={data.totalPages}
+            currentPage={page}
+            onPageChange={setPage}
+          />
         )}
 
-        <Link className={css.button} href="/notes/action/create">Create note +</Link>
+        <Link className={css.button} href="/notes/action/create">
+          Create note +
+        </Link>
       </header>
 
       {isPending && <p>Loading notes...</p>}
@@ -67,7 +73,6 @@ export default function NotesClient({ tag }: { tag: string }) {
       {data && data.notes.length > 0 && <NoteList notes={data.notes} />}
 
       {data && data.notes.length === 0 && <p>No notes found.</p>}
-
     </div>
   );
 }
