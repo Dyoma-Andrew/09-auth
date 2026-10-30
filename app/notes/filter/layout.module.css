@@ -1,0 +1,4 @@
+.container { display: flex; gap: 24px; width: min(1280px, 90%); margin: 24px auto; flex: 1; }
+.sidebar { flex: 0 0 220px; }
+.notesWrapper { min-width: 0; flex: 1; }
+@media (max-width: 700px) { .container { flex-direction: column; } .sidebar { flex-basis: auto; } }

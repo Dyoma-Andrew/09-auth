@@ -1,0 +1,4 @@
+.menuList { display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.menuItem { margin: 0; }
+.menuLink { display: block; padding: 10px 14px; border-radius: 6px; color: #212529; text-decoration: none; }
+.menuLink:hover { color: #0d6efd; background: #e9ecef; }
